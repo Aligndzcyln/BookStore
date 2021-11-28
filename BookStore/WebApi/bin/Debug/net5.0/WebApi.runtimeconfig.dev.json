@@ -1,0 +1,8 @@
+{
+  "runtimeOptions": {
+    "additionalProbingPaths": [
+      "/home/ete-hmi-ali/.dotnet/store/|arch|/|tfm|",
+      "/home/ete-hmi-ali/.nuget/packages"
+    ]
+  }
+}
