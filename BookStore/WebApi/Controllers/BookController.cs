@@ -10,6 +10,8 @@ using WebApi.BookOperations.GetBookDetail;
 using WebApi.BookOperations.UpdateBook;
 using WebApi.BookOperations.DeleteBook;
 using AutoMapper;
+using FluentValidation;
+using FluentValidation.Results;
 
 namespace WebApi.AddControllers
 {
@@ -68,7 +70,25 @@ namespace WebApi.AddControllers
             {
                 CreateBookCommand command = new CreateBookCommand(_context, _mapper);
                 command.Model = newBook;
+
+                CreateBookCommandValidator validator = new CreateBookCommandValidator();
+                // ValidationResult result = validator.Validate(command);
+                // if (!result.IsValid)
+                // {
+                //     foreach (var item in result.Errors)
+                //     {
+                //         Console.WriteLine("Özellik " + item.PropertyName + " Error message: " + item.ErrorMessage);
+                //     }
+                // }
+                // else
+                // {
+                //     command.Handle();
+                // }
+
+                validator.ValidateAndThrow(command);
                 command.Handle();
+
+
             }
             catch (Exception e)
             {
@@ -107,6 +127,8 @@ namespace WebApi.AddControllers
             {
                 DeleteBookCommand command = new DeleteBookCommand(_context);
                 command.BookId = id;
+                DeleteBookCommandValidator validator = new DeleteBookCommandValidator();
+                validator.ValidateAndThrow(command);
                 command.Handle();
             }
             catch (System.Exception e)
